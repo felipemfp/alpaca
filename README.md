@@ -14,7 +14,7 @@ docker run -p 5000:5000 felipemfp/alpaca
 
 You should send a POST request to `/__setup/<endpoint>`.
 
-Where *<endpoint>* is the URL you expect to use. For example:
+Where `<endpoint>` is the URL you expect to use. For example:
 
 If I want `/v2/users`, I'll send a setup request to `/__setup/v2/users`.
 
@@ -22,7 +22,7 @@ In the body, you should send what you expect to receive as a response.
 
 You could use query strings to specify `status` (e.g.: 200, 404, 401) and other headers. For example:
 
-Let's say my response should send a JSON with a status code equals to 401, I'll setup and endpoint with:
+Let's say my response should send a JSON with a status code equals to 401, I'll setup an endpoint with:
 
 ```
 /__setup/v2/users?status=401&Content-Type=application/json
