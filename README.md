@@ -40,6 +40,10 @@ Once setup is done, when I ask `/v2/users`, **alpaca** will answer with `[{"name
 
 You should send a POST request to `/__clear` in order to clear all endpoints.
 
+#### List endpoints
+
+You should send a GET request to `/__list` in order to list all saved endpoints.
+
 > More docs are coming.
 
 ---

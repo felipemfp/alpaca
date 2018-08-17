@@ -1,4 +1,5 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
+import json
 
 app = Flask(__name__)
 
@@ -26,9 +27,25 @@ def setup(endpoint):
     endpoints[(method, endpoint)] = (request.data, status, headers)
     return '', 204, {'Content-Type': 'application/json'}
 
+@app.route('/__list', methods=['GET'])
+def list():
+    res = []
 
-@app.route('/<path:endpoint>')
-def spit(endpoint, methods=['GET', 'POST']):
+    for k, v in endpoints.items():
+        item = dict(
+            data=str(v[0]),
+            headers=v[2],
+            status=v[1],
+            method=k[0],
+            endpoint=k[1]
+        )
+
+        res.append(item)
+
+    return jsonify(res)
+
+@app.route('/<path:endpoint>', methods=['GET', 'POST'])
+def spit(endpoint):
     return endpoints.get(
         (request.method, endpoint),
         ('', 404, {'Content-Type': 'application/json'})
