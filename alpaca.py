@@ -44,7 +44,7 @@ def list():
 
     return jsonify(res)
 
-@app.route('/<path:endpoint>', methods=['GET', 'POST'])
+@app.route('/<path:endpoint>', methods=['GET', 'POST', 'DELETE', 'PUT'])
 def spit(endpoint):
     return endpoints.get(
         (request.method, endpoint),
