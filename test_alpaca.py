@@ -1,8 +1,7 @@
-import os
-import tempfile
 import pytest
 
 from alpaca import app
+
 
 @pytest.fixture
 def client():
@@ -20,10 +19,12 @@ def test_empty_list(client):
 
     assert json_data == []
 
+
 def test_get_returning_json(client):
-    rv = client.post('/__setup/test?method=GET&status=200&Content-Type=application/json', json={
-        'hello': 'world',
-    })
+    rv = client.post(
+        '/__setup/test?method=GET&status=200&Content-Type=application/json',
+        json=dict(hello='world')
+    )
 
     assert rv.status_code == 204
 
@@ -36,11 +37,15 @@ def test_get_returning_json(client):
 
     assert json_data == {'hello': 'world'}
 
+
 def test_post_returning_json(client):
-    rv = client.post('/__setup/test?method=POST&status=200&Content-Type=application/json', json={
-        'hello': 'world',
-        'post': True,
-    })
+    rv = client.post(
+        '/__setup/test?method=POST&status=200&Content-Type=application/json',
+        json={
+            'hello': 'world',
+            'post': True,
+        }
+    )
 
     assert rv.status_code == 204
 
@@ -52,15 +57,19 @@ def test_post_returning_json(client):
     json_data = res.get_json()
 
     assert json_data == {
-            'hello': 'world',
-            'post': True
-        }
+        'hello': 'world',
+        'post': True
+    }
+
 
 def test_delete_returning_json(client):
-    rv = client.post('/__setup/test?method=DELETE&status=200&Content-Type=application/json', json={
-        'hello': 'world',
-        'delete': True,
-    })
+    rv = client.post(
+        '/__setup/test?method=DELETE&status=200&Content-Type=application/json',
+        json={
+            'hello': 'world',
+            'delete': True,
+        }
+    )
 
     assert rv.status_code == 204
 
@@ -72,15 +81,19 @@ def test_delete_returning_json(client):
     json_data = res.get_json()
 
     assert json_data == {
-            'hello': 'world',
-            'delete': True
-        }
+        'hello': 'world',
+        'delete': True
+    }
+
 
 def test_put_returning_json(client):
-    rv = client.post('/__setup/test?method=PUT&status=200&Content-Type=application/json', json={
-        'hello': 'world',
-        'put': True,
-    })
+    rv = client.post(
+        '/__setup/test?method=PUT&status=200&Content-Type=application/json',
+        json={
+            'hello': 'world',
+            'put': True,
+        }
+    )
 
     assert rv.status_code == 204
 
@@ -92,6 +105,6 @@ def test_put_returning_json(client):
     json_data = res.get_json()
 
     assert json_data == {
-            'hello': 'world',
-            'put': True
-        }
+        'hello': 'world',
+        'put': True
+    }

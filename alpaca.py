@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-import json
 
 app = Flask(__name__)
 
@@ -10,7 +9,7 @@ endpoints = {}
 def clear():
     global endpoints
     endpoints = {}
-    return '', 204, {'Content-Type': 'application/json'} 
+    return '', 204, {'Content-Type': 'application/json'}
 
 
 @app.route('/__setup/<path:endpoint>', methods=['POST'])
@@ -27,8 +26,9 @@ def setup(endpoint):
     endpoints[(method, endpoint)] = (request.data, status, headers)
     return '', 204, {'Content-Type': 'application/json'}
 
+
 @app.route('/__list', methods=['GET'])
-def list():
+def show():
     res = []
 
     for k, v in endpoints.items():
@@ -43,6 +43,7 @@ def list():
         res.append(item)
 
     return jsonify(res)
+
 
 @app.route('/<path:endpoint>', methods=['GET', 'POST', 'DELETE', 'PUT'])
 def spit(endpoint):

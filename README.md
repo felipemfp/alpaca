@@ -1,4 +1,4 @@
-# alpaca
+# alpaca [![CircleCI](https://circleci.com/gh/felipemfp/alpaca.svg?style=shield)](https://circleci.com/gh/felipemfp/alpaca) [![codecov](https://codecov.io/gh/felipemfp/alpaca/branch/master/graph/badge.svg)](https://codecov.io/gh/felipemfp/alpaca)
 
 > :sweat_drops: Spitting JSON as a microservice
 
@@ -81,7 +81,7 @@ Please feel free for submitting pull requests to us.
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/felipemfp/alpaca/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/felipemfp/alpaca/tags).
 
 ## Authors
 

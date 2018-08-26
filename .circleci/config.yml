@@ -1,0 +1,38 @@
+version: 2
+
+jobs: # a collection of steps
+  build: # runs not using Workflows must have a `build` job as entry point
+    working_directory: ~/alpaca # directory where steps will run
+    docker: # run the steps with Docker
+      - image: circleci/python:3.6.1 # ...with this image as the primary container; this is where all `steps` will run
+    environment:
+      PIPENV_CACHE_DIR: ~/.pipenv/cache
+    steps:
+      - run:
+          command: |
+            echo 'export PATH=$HOME/.local/bin:$PATH' >> $BASH_ENV
+            source $BASH_ENV
+      - checkout
+      - restore_cache: # restores saved dependency cache if the Branch key template or Pipfile.lock files have not changed since the previous run
+          key: deps1-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+      - run:
+          name: Install dependencies
+          command: |
+            python3 -m pip install --user pipenv coverage
+            pipenv install --dev --deploy
+      - save_cache: # special step to save dependency cache
+          key: deps1-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+          paths:
+            - "~/.pipenv/cache"
+      - run:
+          name: Run lint
+          command: |
+            pipenv run flake8 ./
+      - run:
+          name: Run tests
+          command: |
+            pipenv run pytest --cov=alpaca
+      - run:
+          name: Update coverage report to Codecov
+          command: |
+            bash <(curl -s https://codecov.io/bash)
