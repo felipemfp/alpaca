@@ -12,29 +12,23 @@ docker run -p 5000:5000 felipemfp/alpaca
 
 #### Setting up an endpoint
 
-You should send a POST request to `/__setup/<endpoint>`.
+You should send a POST request to `/__setup/<endpoint>`. For example:
 
-Where `<endpoint>` is the URL you expect to use. For example:
-
-If I want `/v2/users`, I'll send a setup request to `/__setup/v2/users`.
-
-In the body, you should send what you expect to receive as a response.
-
-You could use query strings to specify `status` (e.g.: 200, 404, 401) and other headers. For example:
-
-Let's say my response should send a JSON with a status code equals to 401, I'll setup an endpoint with:
-
-```
-/__setup/v2/users?status=401&Content-Type=application/json
+```bash
+curl \
+  -d "[{"name": "Foo"}, {"name": "Joe"}]" \
+  -X POST \
+  http://localhost:5000/__setup/v2/users?method=GET&status=200&Content-Type=application/json
 ```
 
-And the body:
+Now `alpaca` will send `[{"name": "Foo"}, {"name": "Joe"}]` when `/v2/users` is requested:
 
-```json
-[{"name": "Foo"}, {"name": "Joe"}]
+```bash
+curl http://localhost:5000/v2/users
 ```
 
-Once setup is done, when I ask `/v2/users`, **alpaca** will answer with `[{"name": "Foo"}, {"name": "Joe"}]`, status code as `401` and `Content-Type` in headers with `application/json`.
+> The response status code is `200` and `Content-Type` header is `application/json`.
+
 
 #### Clearing endpoints
 
